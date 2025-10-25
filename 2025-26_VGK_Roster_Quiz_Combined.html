@@ -563,12 +563,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>⚔️ VEGAS GOLDEN KNIGHTS ⚔️<br><span id="seasonYear">2025-26</span> ROSTER QUIZ</h1>
+        <h1>⚔️ VEGAS GOLDEN KNIGHTS ⚔️<br>2025-26 ROSTER QUIZ</h1>
 
         <!-- Start Screen -->
         <div class="start-screen" id="startScreen">
             <h2 style="margin-bottom: 10px;">SELECT YOUR OPTIONS</h2>
 
+            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em; color: #d4c5a0;">Difficulty:</h3>
             <div class="mode-selection">
                 <div class="mode-option selected" onclick="selectMode('easy')">
                     <input type="radio" id="mode-easy" name="mode" value="easy" checked>
@@ -580,6 +581,7 @@
                 </div>
             </div>
 
+            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em; color: #d4c5a0;">Color Palette:</h3>
             <div class="palette-selection">
                 <div class="palette-option selected" onclick="selectPalette('classic')">
                     <input type="radio" id="palette-classic" name="palette" value="classic" checked>
@@ -591,13 +593,40 @@
                 </div>
             </div>
 
-            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em; color: #d4c5a0;">Choose Question Type:</h3>
+            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em; color: #d4c5a0;">By Question Type:</h3>
             <div class="category-selection">
                 <div class="category-option">
-                    <input type="checkbox" id="cat-forwards" checked onchange="updateStartButton()">
-                    <label for="cat-forwards" onclick="toggleCategory('forwards')">
-                        Forwards
-                        <div class="category-count">Questions about forwards</div>
+                    <input type="checkbox" id="cat-numbers" checked onchange="updateStartButton()">
+                    <label for="cat-numbers" onclick="toggleCategory('numbers')">
+                        Player Numbers
+                        <div class="category-count">Questions about jersey numbers</div>
+                    </label>
+                </div>
+
+                <div class="category-option">
+                    <input type="checkbox" id="cat-handedness" checked onchange="updateStartButton()">
+                    <label for="cat-handedness" onclick="toggleCategory('handedness')">
+                        Handedness
+                        <div class="category-count">Questions about shooting/catching side</div>
+                    </label>
+                </div>
+
+                <div class="category-option">
+                    <input type="checkbox" id="cat-position" checked onchange="updateStartButton()">
+                    <label for="cat-position" onclick="toggleCategory('position')">
+                        Position
+                        <div class="category-count">Questions about player positions</div>
+                    </label>
+                </div>
+            </div>
+
+            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em; color: #d4c5a0;">By Player Position:</h3>
+            <div class="category-selection">
+                <div class="category-option">
+                    <input type="checkbox" id="cat-goalies" checked onchange="updateStartButton()">
+                    <label for="cat-goalies" onclick="toggleCategory('goalies')">
+                        Goalies
+                        <div class="category-count">Questions about goaltenders</div>
                     </label>
                 </div>
 
@@ -610,53 +639,10 @@
                 </div>
 
                 <div class="category-option">
-                    <input type="checkbox" id="cat-goalies" checked onchange="updateStartButton()">
-                    <label for="cat-goalies" onclick="toggleCategory('goalies')">
-                        Goalies
-                        <div class="category-count">Questions about goaltenders</div>
-                    </label>
-                </div>
-
-                <div class="category-option">
-                    <input type="checkbox" id="cat-numbers" checked onchange="updateStartButton()">
-                    <label for="cat-numbers" onclick="toggleCategory('numbers')">
-                        Player Numbers
-                        <div class="category-count">Questions about jersey numbers</div>
-                    </label>
-                </div>
-
-                <div class="category-option">
-                    <input type="checkbox" id="cat-position" checked onchange="updateStartButton()">
-                    <label for="cat-position" onclick="toggleCategory('position')">
-                        Player Position
-                        <div class="category-count">Questions about player positions</div>
-                    </label>
-                </div>
-
-                <div class="category-option">
-                    <input type="checkbox" id="cat-handedness" checked onchange="updateStartButton()">
-                    <label for="cat-handedness" onclick="toggleCategory('handedness')">
-                        Handedness
-                        <div class="category-count">Questions about shooting/catching side</div>
-                    </label>
-                </div>
-            </div>
-
-            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em; color: #d4c5a0;">Bonus Categories:</h3>
-            <div class="category-selection">
-                <div class="category-option">
-                    <input type="checkbox" id="cat-physical" onchange="updateStartButton()">
-                    <label for="cat-physical" onclick="toggleCategory('physical')">
-                        Height & Weight
-                        <div class="category-count">Questions about player physical stats</div>
-                    </label>
-                </div>
-
-                <div class="category-option">
-                    <input type="checkbox" id="cat-hometown" onchange="updateStartButton()">
-                    <label for="cat-hometown" onclick="toggleCategory('hometown')">
-                        Hometown & Country
-                        <div class="category-count">Questions about player birthplace</div>
+                    <input type="checkbox" id="cat-forwards" checked onchange="updateStartButton()">
+                    <label for="cat-forwards" onclick="toggleCategory('forwards')">
+                        Forwards
+                        <div class="category-count">Questions about forwards</div>
                     </label>
                 </div>
             </div>
@@ -681,312 +667,8 @@
     </div>
 
     <script>
-        // API Configuration
-        const API_URL = 'https://api-web.nhle.com/v1/roster/VGK/20252026';
-        let rosterData = null;
-        let apiLoaded = false;
-
-        // Extract and format season year from API URL
-        function updateSeasonYear() {
-            const seasonMatch = API_URL.match(/\/(\d{8})$/);
-            if (seasonMatch) {
-                const seasonCode = seasonMatch[1]; // e.g., "20252026"
-                const startYear = seasonCode.substring(0, 4); // "2025"
-                const endYear = seasonCode.substring(6, 8); // "26"
-                const formattedSeason = `${startYear}-${endYear}`;
-                document.getElementById('seasonYear').textContent = formattedSeason;
-            }
-        }
-
-        // Fetch roster data from NHL API
-        async function fetchRosterData() {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch roster data');
-                }
-                rosterData = await response.json();
-                apiLoaded = true;
-                console.log('Live roster data loaded successfully');
-
-                // Update season year in title
-                updateSeasonYear();
-
-                // Generate questions from API data
-                generateQuestionsFromAPI();
-            } catch (error) {
-                console.error('Error fetching roster data:', error);
-                console.log('Using fallback static data');
-                apiLoaded = false;
-            }
-        }
-
-        // Generate questions dynamically from API data
-        function generateQuestionsFromAPI() {
-            if (!rosterData) return;
-
-            // Clear existing questions
-            easyQuestions.length = 0;
-            hardQuestions.length = 0;
-
-            // Helper function to get a random other player from array
-            function getOtherPlayer(arr, currentIdx) {
-                if (arr.length < 2) return arr[0];
-                let otherIdx;
-                do {
-                    otherIdx = Math.floor(Math.random() * arr.length);
-                } while (otherIdx === currentIdx);
-                return arr[otherIdx];
-            }
-
-            // Process goalies - ONE question of EACH type per player
-            if (rosterData.goalies && rosterData.goalies.length > 0) {
-                rosterData.goalies.forEach((goalie, idx, arr) => {
-                    const name = `${goalie.firstName.default} ${goalie.lastName.default}`;
-                    const lastName = goalie.lastName.default;
-                    const number = goalie.sweaterNumber.toString();
-                    const hand = goalie.shootsCatches === 'L' ? 'Left' : 'Right';
-                    const heightInches = goalie.heightInInches || 0;
-                    const weightPounds = goalie.weightInPounds || 0;
-                    const birthCity = goalie.birthCity?.default || 'Unknown';
-                    const birthCountry = goalie.birthCountry || 'Unknown';
-
-                    // Get another goalie for wrong answers
-                    const otherGoalie = getOtherPlayer(arr, idx);
-                    const otherNumber = otherGoalie.sweaterNumber.toString();
-                    const otherName = `${otherGoalie.firstName.default} ${otherGoalie.lastName.default}`;
-                    const otherHeight = otherGoalie.heightInInches || 0;
-                    const otherWeight = otherGoalie.weightInPounds || 0;
-                    const otherCity = otherGoalie.birthCity?.default || 'Unknown';
-                    const otherCountry = otherGoalie.birthCountry || 'Unknown';
-
-                    // EASY MODE - One question of each type
-                    // Numbers questions (2 types)
-                    easyQuestions.push({q: `What # does ${name} wear?`, correct: number, wrong: otherNumber, cat: "goalies", type: "numbers"});
-                    easyQuestions.push({q: `Who wears #${number}?`, correct: name, wrong: otherName, cat: "goalies", type: "numbers"});
-
-                    // Handedness question
-                    easyQuestions.push({q: `Which hand does ${name} catch with?`, correct: hand, wrong: hand === 'Left' ? 'Right' : 'Left', cat: "goalies", type: "handedness"});
-
-                    // Position question
-                    easyQuestions.push({q: `What position does ${name} play?`, correct: "G", wrong: "F", cat: "goalies", type: "position"});
-
-                    // Physical stats questions
-                    if (heightInches > 0) {
-                        easyQuestions.push({q: `How tall is ${name}?`, correct: `${Math.floor(heightInches/12)}'${heightInches%12}"`, wrong: `${Math.floor(otherHeight/12)}'${otherHeight%12}"`, cat: "goalies", type: "physical"});
-                    }
-                    if (weightPounds > 0) {
-                        easyQuestions.push({q: `How much does ${lastName} weigh?`, correct: `${weightPounds} lbs`, wrong: `${otherWeight} lbs`, cat: "goalies", type: "physical"});
-                    }
-
-                    // Hometown questions
-                    if (birthCity !== 'Unknown') {
-                        easyQuestions.push({q: `What city is ${lastName} from?`, correct: birthCity, wrong: otherCity, cat: "goalies", type: "hometown"});
-                    }
-                    if (birthCountry !== 'Unknown') {
-                        easyQuestions.push({q: `What country is ${name} from?`, correct: birthCountry, wrong: otherCountry, cat: "goalies", type: "hometown"});
-                    }
-
-                    // HARD MODE - One question of each type
-                    // Numbers questions (2 types)
-                    hardQuestions.push({q: `What # does ${name} wear?`, a: [number], cat: "goalies", type: "numbers"});
-                    hardQuestions.push({q: `Who wears #${number}?`, a: [name.toLowerCase(), lastName.toLowerCase()], cat: "goalies", type: "numbers"});
-
-                    // Handedness question
-                    hardQuestions.push({q: `Which hand does ${name} catch with?`, a: [hand.toLowerCase(), hand[0].toLowerCase()], cat: "goalies", type: "handedness"});
-
-                    // Position question
-                    hardQuestions.push({q: `What position does ${name} play?`, a: ["g", "goalie", "goaltender"], cat: "goalies", type: "position"});
-
-                    // Physical stats questions
-                    if (heightInches > 0) {
-                        const feet = Math.floor(heightInches/12);
-                        const inches = heightInches%12;
-                        hardQuestions.push({q: `How tall is ${name}?`, a: [`${feet}'${inches}"`, `${feet} ${inches}`, `${feet}${inches}`, `${feet}'${inches}`, `${feet}ft ${inches}in`], cat: "goalies", type: "physical"});
-                    }
-                    if (weightPounds > 0) {
-                        hardQuestions.push({q: `How much does ${lastName} weigh?`, a: [`${weightPounds}`, `${weightPounds} lbs`, `${weightPounds}lbs`], cat: "goalies", type: "physical"});
-                    }
-
-                    // Hometown questions
-                    if (birthCity !== 'Unknown') {
-                        hardQuestions.push({q: `What city is ${lastName} from?`, a: [birthCity.toLowerCase()], cat: "goalies", type: "hometown"});
-                    }
-                    if (birthCountry !== 'Unknown') {
-                        hardQuestions.push({q: `What country is ${name} from?`, a: [birthCountry.toLowerCase()], cat: "goalies", type: "hometown"});
-                    }
-                });
-            }
-
-            // Process defensemen - ONE question of EACH type per player
-            if (rosterData.defensemen && rosterData.defensemen.length > 0) {
-                rosterData.defensemen.forEach((player, idx, arr) => {
-                    const name = `${player.firstName.default} ${player.lastName.default}`;
-                    const lastName = player.lastName.default;
-                    const number = player.sweaterNumber.toString();
-                    const hand = player.shootsCatches === 'L' ? 'Left' : 'Right';
-                    const heightInches = player.heightInInches || 0;
-                    const weightPounds = player.weightInPounds || 0;
-                    const birthCity = player.birthCity?.default || 'Unknown';
-                    const birthCountry = player.birthCountry || 'Unknown';
-
-                    const otherPlayer = getOtherPlayer(arr, idx);
-                    const otherNumber = otherPlayer.sweaterNumber.toString();
-                    const otherName = `${otherPlayer.firstName.default} ${otherPlayer.lastName.default}`;
-                    const otherHeight = otherPlayer.heightInInches || 0;
-                    const otherWeight = otherPlayer.weightInPounds || 0;
-                    const otherCity = otherPlayer.birthCity?.default || 'Unknown';
-                    const otherCountry = otherPlayer.birthCountry || 'Unknown';
-
-                    // EASY MODE - One question of each type
-                    // Numbers questions (2 types)
-                    easyQuestions.push({q: `What # does ${name} wear?`, correct: number, wrong: otherNumber, cat: "defense", type: "numbers"});
-                    easyQuestions.push({q: `Who wears #${number}?`, correct: name, wrong: otherName, cat: "defense", type: "numbers"});
-
-                    // Handedness question
-                    easyQuestions.push({q: `Which hand does ${lastName} shoot?`, correct: hand, wrong: hand === 'Left' ? 'Right' : 'Left', cat: "defense", type: "handedness"});
-
-                    // Position question
-                    easyQuestions.push({q: `What position does ${name} play?`, correct: "D", wrong: "F", cat: "defense", type: "position"});
-
-                    // Physical stats questions
-                    if (heightInches > 0) {
-                        easyQuestions.push({q: `How tall is ${name}?`, correct: `${Math.floor(heightInches/12)}'${heightInches%12}"`, wrong: `${Math.floor(otherHeight/12)}'${otherHeight%12}"`, cat: "defense", type: "physical"});
-                    }
-                    if (weightPounds > 0) {
-                        easyQuestions.push({q: `How much does ${lastName} weigh?`, correct: `${weightPounds} lbs`, wrong: `${otherWeight} lbs`, cat: "defense", type: "physical"});
-                    }
-
-                    // Hometown questions
-                    if (birthCity !== 'Unknown') {
-                        easyQuestions.push({q: `What city is ${lastName} from?`, correct: birthCity, wrong: otherCity, cat: "defense", type: "hometown"});
-                    }
-                    if (birthCountry !== 'Unknown') {
-                        easyQuestions.push({q: `What country is ${name} from?`, correct: birthCountry, wrong: otherCountry, cat: "defense", type: "hometown"});
-                    }
-
-                    // HARD MODE - One question of each type
-                    // Numbers questions (2 types)
-                    hardQuestions.push({q: `What # does ${name} wear?`, a: [number], cat: "defense", type: "numbers"});
-                    hardQuestions.push({q: `Who wears #${number}?`, a: [name.toLowerCase(), lastName.toLowerCase()], cat: "defense", type: "numbers"});
-
-                    // Handedness question
-                    hardQuestions.push({q: `Which hand does ${lastName} shoot?`, a: [hand.toLowerCase(), hand[0].toLowerCase()], cat: "defense", type: "handedness"});
-
-                    // Position question
-                    hardQuestions.push({q: `What position does ${name} play?`, a: ["d", "defense", "defenseman"], cat: "defense", type: "position"});
-
-                    // Physical stats questions
-                    if (heightInches > 0) {
-                        const feet = Math.floor(heightInches/12);
-                        const inches = heightInches%12;
-                        hardQuestions.push({q: `How tall is ${name}?`, a: [`${feet}'${inches}"`, `${feet} ${inches}`, `${feet}${inches}`, `${feet}'${inches}`, `${feet}ft ${inches}in`], cat: "defense", type: "physical"});
-                    }
-                    if (weightPounds > 0) {
-                        hardQuestions.push({q: `How much does ${lastName} weigh?`, a: [`${weightPounds}`, `${weightPounds} lbs`, `${weightPounds}lbs`], cat: "defense", type: "physical"});
-                    }
-
-                    // Hometown questions
-                    if (birthCity !== 'Unknown') {
-                        hardQuestions.push({q: `What city is ${lastName} from?`, a: [birthCity.toLowerCase()], cat: "defense", type: "hometown"});
-                    }
-                    if (birthCountry !== 'Unknown') {
-                        hardQuestions.push({q: `What country is ${name} from?`, a: [birthCountry.toLowerCase()], cat: "defense", type: "hometown"});
-                    }
-                });
-            }
-
-            // Process forwards - ONE question of EACH type per player
-            if (rosterData.forwards && rosterData.forwards.length > 0) {
-                rosterData.forwards.forEach((player, idx, arr) => {
-                    const name = `${player.firstName.default} ${player.lastName.default}`;
-                    const lastName = player.lastName.default;
-                    const number = player.sweaterNumber.toString();
-                    const hand = player.shootsCatches === 'L' ? 'Left' : 'Right';
-                    const heightInches = player.heightInInches || 0;
-                    const weightPounds = player.weightInPounds || 0;
-                    const birthCity = player.birthCity?.default || 'Unknown';
-                    const birthCountry = player.birthCountry || 'Unknown';
-
-                    const otherPlayer = getOtherPlayer(arr, idx);
-                    const otherNumber = otherPlayer.sweaterNumber.toString();
-                    const otherName = `${otherPlayer.firstName.default} ${otherPlayer.lastName.default}`;
-                    const otherHeight = otherPlayer.heightInInches || 0;
-                    const otherWeight = otherPlayer.weightInPounds || 0;
-                    const otherCity = otherPlayer.birthCity?.default || 'Unknown';
-                    const otherCountry = otherPlayer.birthCountry || 'Unknown';
-
-                    // EASY MODE - One question of each type
-                    // Numbers questions (2 types)
-                    easyQuestions.push({q: `What # does ${name} wear?`, correct: number, wrong: otherNumber, cat: "forwards", type: "numbers"});
-                    easyQuestions.push({q: `Who wears #${number}?`, correct: name, wrong: otherName, cat: "forwards", type: "numbers"});
-
-                    // Handedness question
-                    easyQuestions.push({q: `Which hand does ${lastName} shoot?`, correct: hand, wrong: hand === 'Left' ? 'Right' : 'Left', cat: "forwards", type: "handedness"});
-
-                    // Position question
-                    easyQuestions.push({q: `What position is ${lastName}?`, correct: "F", wrong: "D", cat: "forwards", type: "position"});
-
-                    // Physical stats questions
-                    if (heightInches > 0) {
-                        easyQuestions.push({q: `How tall is ${name}?`, correct: `${Math.floor(heightInches/12)}'${heightInches%12}"`, wrong: `${Math.floor(otherHeight/12)}'${otherHeight%12}"`, cat: "forwards", type: "physical"});
-                    }
-                    if (weightPounds > 0) {
-                        easyQuestions.push({q: `How much does ${lastName} weigh?`, correct: `${weightPounds} lbs`, wrong: `${otherWeight} lbs`, cat: "forwards", type: "physical"});
-                    }
-
-                    // Hometown questions
-                    if (birthCity !== 'Unknown') {
-                        easyQuestions.push({q: `What city is ${lastName} from?`, correct: birthCity, wrong: otherCity, cat: "forwards", type: "hometown"});
-                    }
-                    if (birthCountry !== 'Unknown') {
-                        easyQuestions.push({q: `What country is ${name} from?`, correct: birthCountry, wrong: otherCountry, cat: "forwards", type: "hometown"});
-                    }
-
-                    // HARD MODE - One question of each type
-                    // Numbers questions (2 types)
-                    hardQuestions.push({q: `What # does ${name} wear?`, a: [number], cat: "forwards", type: "numbers"});
-                    hardQuestions.push({q: `Who wears #${number}?`, a: [name.toLowerCase(), lastName.toLowerCase()], cat: "forwards", type: "numbers"});
-
-                    // Handedness question
-                    hardQuestions.push({q: `Which hand does ${lastName} shoot?`, a: [hand.toLowerCase(), hand[0].toLowerCase()], cat: "forwards", type: "handedness"});
-
-                    // Position question
-                    hardQuestions.push({q: `What position is ${lastName}?`, a: ["f", "forward", "forwards"], cat: "forwards", type: "position"});
-
-                    // Physical stats questions
-                    if (heightInches > 0) {
-                        const feet = Math.floor(heightInches/12);
-                        const inches = heightInches%12;
-                        hardQuestions.push({q: `How tall is ${name}?`, a: [`${feet}'${inches}"`, `${feet} ${inches}`, `${feet}${inches}`, `${feet}'${inches}`, `${feet}ft ${inches}in`], cat: "forwards", type: "physical"});
-                    }
-                    if (weightPounds > 0) {
-                        hardQuestions.push({q: `How much does ${lastName} weigh?`, a: [`${weightPounds}`, `${weightPounds} lbs`, `${weightPounds}lbs`], cat: "forwards", type: "physical"});
-                    }
-
-                    // Hometown questions
-                    if (birthCity !== 'Unknown') {
-                        hardQuestions.push({q: `What city is ${lastName} from?`, a: [birthCity.toLowerCase()], cat: "forwards", type: "hometown"});
-                    }
-                    if (birthCountry !== 'Unknown') {
-                        hardQuestions.push({q: `What country is ${name} from?`, a: [birthCountry.toLowerCase()], cat: "forwards", type: "hometown"});
-                    }
-                });
-            }
-
-            console.log(`Generated ${easyQuestions.length} easy questions and ${hardQuestions.length} hard questions from live roster data`);
-            console.log(`Roster: ${rosterData.goalies?.length || 0} goalies, ${rosterData.defensemen?.length || 0} defensemen, ${rosterData.forwards?.length || 0} forwards`);
-        }
-
-        // Initialize empty question arrays - will be populated by API
-        let easyQuestions = [];
-        let hardQuestions = [];
-
-        // Load roster data when page loads
-        fetchRosterData();
-
-        // OLD Fallback static questions - REMOVED to ensure only live API data is used
-        // const easyQuestions = [
+        // Easy mode questions (multiple choice)
+        const easyQuestions = [
             // Goalies
             {q: "What # does Adin Hill wear?", correct: "33", wrong: "40", cat: "goalies", type: "numbers"},
             {q: "What # does Akira Schmid wear?", correct: "40", wrong: "33", cat: "goalies", type: "numbers"},
@@ -1075,13 +757,13 @@
             {q: "What position is Schwindt?", correct: "F", wrong: "D", cat: "forwards", type: "position"},
             {q: "What position is Laczynski?", correct: "F", wrong: "G", cat: "forwards", type: "position"},
             {q: "What position is Eichel?", correct: "F", wrong: "D", cat: "forwards", type: "position"},
-            // {q: "What position is Stone?", correct: "F", wrong: "D", cat: "forwards", type: "position"},
-            // {q: "How many forwards shoot right?", correct: "6", wrong: "7", cat: "forwards", type: "handedness"},
-            // {q: "How many forwards shoot left?", correct: "7", wrong: "6", cat: "forwards", type: "handedness"}
-        // ];
+            {q: "What position is Stone?", correct: "F", wrong: "D", cat: "forwards", type: "position"},
+            {q: "How many forwards shoot right?", correct: "6", wrong: "7", cat: "forwards", type: "handedness"},
+            {q: "How many forwards shoot left?", correct: "7", wrong: "6", cat: "forwards", type: "handedness"}
+        ];
 
-        // OLD Hard mode questions - REMOVED to ensure only live API data is used
-        // const hardQuestions = [
+        // Hard mode questions (type answers)
+        const hardQuestions = [
             // Goalies
             {q: "What # does Adin Hill wear?", a: ["33"], cat: "goalies", type: "numbers"},
             {q: "What # does Akira Schmid wear?", a: ["40"], cat: "goalies", type: "numbers"},
@@ -1157,10 +839,10 @@
             {q: "Which hand does Schwindt shoot?", a: ["right", "r"], cat: "forwards", type: "handedness"},
             {q: "Which hand does Laczynski shoot?", a: ["right", "r"], cat: "forwards", type: "handedness"},
             {q: "Which hand does Eichel shoot?", a: ["right", "r"], cat: "forwards", type: "handedness"},
-            // {q: "Which hand does Stone shoot?", a: ["right", "r"], cat: "forwards", type: "handedness"},
-            // {q: "How many forwards shoot right?", a: ["6", "six"], cat: "forwards", type: "handedness"},
-            // {q: "How many forwards shoot left?", a: ["7", "seven"], cat: "forwards", type: "handedness"}
-        // ];
+            {q: "Which hand does Stone shoot?", a: ["right", "r"], cat: "forwards", type: "handedness"},
+            {q: "How many forwards shoot right?", a: ["6", "six"], cat: "forwards", type: "handedness"},
+            {q: "How many forwards shoot left?", a: ["7", "seven"], cat: "forwards", type: "handedness"}
+        ];
 
         let currentMode = 'easy';
         let currentPalette = 'classic';
@@ -1222,12 +904,6 @@
         }
 
         function startQuiz() {
-            // Check if API data has loaded
-            if (!apiLoaded || easyQuestions.length === 0 || hardQuestions.length === 0) {
-                alert('Roster data is still loading from the NHL API. Please wait a moment and try again.');
-                return;
-            }
-
             // Load stats for selected mode
             loadStats();
 
@@ -1236,31 +912,22 @@
             if (document.getElementById('cat-numbers').checked) selectedTypes.push('numbers');
             if (document.getElementById('cat-handedness').checked) selectedTypes.push('handedness');
             if (document.getElementById('cat-position').checked) selectedTypes.push('position');
-            if (document.getElementById('cat-physical').checked) selectedTypes.push('physical');
-            if (document.getElementById('cat-hometown').checked) selectedTypes.push('hometown');
 
             const selectedPositions = [];
             if (document.getElementById('cat-goalies').checked) selectedPositions.push('goalies');
             if (document.getElementById('cat-defense').checked) selectedPositions.push('defense');
             if (document.getElementById('cat-forwards').checked) selectedPositions.push('forwards');
 
-            if (selectedPositions.length === 0) {
-                alert('Please select at least one player position');
+            if (selectedTypes.length === 0 || selectedPositions.length === 0) {
+                alert('Please select at least one option from each category');
                 return;
             }
 
             // Filter questions
             const questionPool = currentMode === 'easy' ? easyQuestions : hardQuestions;
-
-            // If no question types selected OR only position types selected, show all questions for selected positions
-            if (selectedTypes.length === 0) {
-                activeQuestions = questionPool.filter(q => selectedPositions.includes(q.cat));
-            } else {
-                // Show questions that match both position and type filters
-                activeQuestions = questionPool.filter(q =>
-                    selectedTypes.includes(q.type) && selectedPositions.includes(q.cat)
-                );
-            }
+            activeQuestions = questionPool.filter(q =>
+                selectedTypes.includes(q.type) && selectedPositions.includes(q.cat)
+            );
 
             if (activeQuestions.length === 0) {
                 alert('No questions match your selected categories');
