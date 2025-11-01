@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VGK Roster Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ========== LANDING PAGE ========== -->
+    <div id="landingPage" class="page active">
+        <div class="container">
+            <h1>⚔️ VEGAS GOLDEN KNIGHTS ⚔️</h1>
+            <h2 id="seasonTitle">2025-26 ROSTER QUIZ</h2>
+            
+            <div class="roster-info" id="rosterInfo">
+                <div class="loading">Loading roster data...</div>
+            </div>
+
+            <div class="main-buttons">
+                <button class="btn-large btn-primary" onclick="goToPage('quizBuilder')">
+                    🏒 GAME TIME
+                </button>
+                <button class="btn-large btn-secondary" onclick="goToPage('studyGuide')">
+                    📚 SCRIMMAGE
+                </button>
+            </div>
+
+            <div class="stats-button-container">
+                <button class="btn-stats" onclick="viewStats()">📊 View My Stats</button>
+            </div>
+
+            <div class="color-scheme-selector">
+                <button class="btn-scheme" onclick="setColorScheme('classic')" id="btnClassic">Classic</button>
+                <button class="btn-scheme" onclick="setColorScheme('bold')" id="btnBold">Bold</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== QUIZ BUILDER PAGE ========== -->
+    <div id="quizBuilder" class="page">
+        <div class="container">
+            <button class="btn-back" onclick="goToPage('landingPage')">← Back to Home</button>
+            
+            <h1>🏒 GAME TIME</h1>
+            <h3>Build Your Quiz</h3>
+
+            <div class="quiz-options">
+                <div class="option-section">
+                    <h4>Difficulty</h4>
+                    <div class="btn-group">
+                        <button class="btn-toggle active" data-difficulty="easy" onclick="selectDifficulty('easy')">
+                            Easy (Multiple Choice)
+                        </button>
+                        <button class="btn-toggle" data-difficulty="hard" onclick="selectDifficulty('hard')">
+                            Hard (Type Answer)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="option-section">
+                    <h4>Question Types</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="qtype-numbers" checked> Player Numbers
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="qtype-handedness" checked> Handedness
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="qtype-position" checked> Position
+                    </label>
+                </div>
+
+                <div class="option-section">
+                    <h4>Player Positions</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="ptype-forwards" checked> Forwards
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="ptype-defense" checked> Defense
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="ptype-goalies" checked> Goalies
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn-large btn-primary" onclick="startQuiz()">Start Quiz</button>
+        </div>
+    </div>
+
+    <!-- ========== QUIZ PAGE ========== -->
+    <div id="quizPage" class="page">
+        <div class="container">
+            <button class="btn-back" onclick="exitQuiz()">← Exit Quiz</button>
+            
+            <div class="quiz-header">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="quiz-stats">
+                    <span id="questionCounter">Question 1 of 20</span>
+                    <span id="quizScore">Score: 0</span>
+                </div>
+            </div>
+
+            <div id="quizContent">
+                <!-- Questions will be injected here -->
+            </div>
+
+            <div class="quiz-navigation">
+                <button class="btn-nav" id="btnPrev" onclick="prevQuestion()" disabled>← Previous</button>
+                <button class="btn-nav btn-primary" id="btnNext" onclick="nextQuestion()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STUDY GUIDE PAGE ========== -->
+    <div id="studyGuide" class="page">
+        <div class="container">
+            <button class="btn-back" onclick="goToPage('landingPage')">← Back to Home</button>
+            
+            <h1>📚 SCRIMMAGE</h1>
+            <h3>Study the Roster</h3>
+
+            <div class="study-filters">
+                <button class="btn-filter active" onclick="filterStudy('all')">All Players</button>
+                <button class="btn-filter" onclick="filterStudy('forwards')">Forwards</button>
+                <button class="btn-filter" onclick="filterStudy('defense')">Defense</button>
+                <button class="btn-filter" onclick="filterStudy('goalies')">Goalies</button>
+            </div>
+
+            <div id="studyContent" class="study-grid">
+                <!-- Player cards will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== RESULTS PAGE ========== -->
+    <div id="resultsPage" class="page">
+        <div class="container">
+            <h1>📊 QUIZ RESULTS</h1>
+            
+            <div class="results-summary" id="resultsSummary">
+                <!-- Results will be injected here -->
+            </div>
+
+            <div class="results-buttons">
+                <button class="btn-large btn-primary" onclick="startQuiz()">Take Another Quiz</button>
+                <button class="btn-large btn-secondary" onclick="goToPage('landingPage')">Back to Home</button>
+            </div>
+
+            <div id="resultsDetail" class="results-detail">
+                <!-- Detailed results will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
