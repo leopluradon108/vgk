@@ -88,3 +88,19 @@ h1 {
 .player-table tr:hover {
     background-color: #3d4a57;
 }
+
+.template-category {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #3d4a57;
+}
+
+.template-category:last-child {
+    border-bottom: none;
+}
+
+.template-category h3 {
+    color: #B4975A;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
