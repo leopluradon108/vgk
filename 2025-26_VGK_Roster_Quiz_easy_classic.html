@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025-26 VGK Roster Quiz - Easy Mode</title>
+    <style>
+        body {
+            font-family: 'Arial', -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #3d4954 50%, #2a2a2a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .logo-header {
+            text-align: center;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            margin-bottom: 0;
+        }
+        .logo-header img {
+            max-width: 300px;
+            height: auto;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 2px solid #b8965f;
+        }
+        h1 {
+            color: #f5f5f5;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        h2 {
+            color: #d4c5a0;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .question {
+            margin: 20px 0;
+            padding: 20px;
+            background: #1f1f1f;
+            border-radius: 10px;
+            border-left: 4px solid #b8965f;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .question-text {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #f5f5f5;
+            line-height: 1.5;
+        }
+        .options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .option-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 2px solid #555;
+            border-radius: 8px;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-btn:hover {
+            border-color: #b8965f;
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 150, 95, 0.3);
+        }
+        .option-btn.selected {
+            background: #d4c5a0;
+            border-color: #b8965f;
+            color: #1a1a1a;
+        }
+        .option-btn.correct {
+            background: #81c784;
+            border-color: #4CAF50;
+            color: #1a1a1a;
+        }
+        .option-btn.incorrect {
+            background: #e57373;
+            border-color: #f44336;
+            color: #1a1a1a;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .feedback.correct {
+            background: #2e5930;
+            color: #a5d6a7;
+            border: 2px solid #4CAF50;
+        }
+        .feedback.incorrect {
+            background: #5a2e2e;
+            color: #ef9a9a;
+            border: 2px solid #f44336;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #d4c5a0 0%, #b8965f 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #e0d3b3 0%, #c7a66f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+        }
+        .shuffle-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #f5f5f5;
+            background: #3d4954;
+            border: 2px solid #555;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+        .shuffle-btn:hover {
+            background: #4a5866;
+            border-color: #b8965f;
+            transform: translateY(-2px);
+        }
+        .reset-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #d0d0d0;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .reset-btn:hover {
+            background: #2a2a2a;
+            border-color: #666;
+        }
+        .score {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            margin: 20px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #d4c5a0 0%, #b8965f 100%);
+            border-radius: 10px;
+            display: none;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        .progress {
+            text-align: center;
+            color: #d4c5a0;
+            margin-bottom: 20px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-wrong {
+            background: #5a2e2e;
+            color: #ef9a9a;
+            border: 1px solid #f44336;
+        }
+        .status-correct {
+            background: #2e5930;
+            color: #a5d6a7;
+            border: 1px solid #4CAF50;
+        }
+        .start-screen {
+            text-align: center;
+        }
+        .quiz-screen {
+            display: none;
+        }
+        .category-selection {
+            margin: 30px 0;
+            text-align: left;
+        }
+        .category-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: #1f1f1f;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid #444;
+            transition: all 0.2s;
+        }
+        .category-option:hover {
+            border-color: #b8965f;
+            background: #252525;
+        }
+        .category-option input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .category-option label {
+            cursor: pointer;
+            font-weight: 600;
+            color: #f5f5f5;
+            font-size: 16px;
+        }
+        .start-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #d4c5a0 0%, #b8965f 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s;
+        }
+        .start-btn:hover {
+            background: linear-gradient(135deg, #e0d3b3 0%, #c7a66f 100%);
+            transform: translateY(-2px);
+        }
+        .start-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-header">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" alt="Vegas Golden Knights" style="background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iIzFhMWExYSIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNDAlIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNmNWY1ZjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgVkVHQVMKICA8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI3NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2I4OTY1ZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjMiPgogICAgR09MREVOCG5pZ2h0czsKICCA8L3RleHQ+Cjwvc3ZnPg=='); background-size: contain; background-repeat: no-repeat; background-position: center;">
+    </div>
+    
+    <div class="container">
+        <div class="start-screen" id="startScreen">
+            <h1>2025-26 Roster Quiz</h1>
+            <h2>Easy Mode - Multiple Choice</h2>
+            
+            <div class="category-selection">
+                <h3 style="color: #d4c5a0; margin-bottom: 15px; font-size: 18px;">Select Categories:</h3>
+                <div class="category-option">
+                    <input type="checkbox" id="catGoalies" value="goalies" checked>
+                    <label for="catGoalies">Goalies (20 questions)</label>
+                </div>
+                <div class="category-option">
+                    <input type="checkbox" id="catDefense" value="defense" checked>
+                    <label for="catDefense">Defense (35 questions)</label>
+                </div>
+                <div class="category-option">
+                    <input type="checkbox" id="catForwards" value="forwards" checked>
+                    <label for="catForwards">Forwards (56 questions)</label>
+                </div>
+            </div>
+            
+            <button class="start-btn" onclick="startQuiz()" id="startBtn">Start Quiz</button>
+        </div>
+        
+        <div class="quiz-screen" id="quizScreen">
+            <h1>⚔️ Vegas Golden Knights ⚔️</h1>
+            <h2>2025-26 Roster Quiz - Easy Mode</h2>
+            <button class="shuffle-btn" onclick="shuffleQuiz()">🔀 Shuffle Quiz</button>
+            <button class="reset-btn" onclick="viewStats()">📊 View My Stats</button>
+            <button class="reset-btn" onclick="exportStats()">💾 Export Stats</button>
+            <button class="reset-btn" onclick="resetStats()">↺ Reset All Stats</button>
+            <button class="reset-btn" onclick="backToStart()">← Back to Category Selection</button>
+            <div class="progress" id="progress">Select answers then click Submit</div>
+            <div class="score" id="score"></div>
+            <form id="quizForm">
+                <div id="questions"></div>
+                <button type="submit" class="submit-btn">Submit Answers</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Goalies
+            {q: "What # does Adin Hill wear?", correct: "33", wrong: "40", cat: "goalies"},
+            {q: "What # does Akira Schmid wear?", correct: "40", wrong: "33", cat: "goalies"},
+            {q: "Which hand do both goalies catch with?", correct: "Left", wrong: "Right", cat: "goalies"},
+            {q: "Who wears #33?", correct: "Adin Hill", wrong: "Akira Schmid", cat: "goalies"},
+            {q: "Who wears #40?", correct: "Akira Schmid", wrong: "Adin Hill", cat: "goalies"},
+            {q: "What position does Adin Hill play?", correct: "G", wrong: "F", cat: "goalies"},
+            {q: "What position does Akira Schmid play?", correct: "G", wrong: "D", cat: "goalies"},
+            {q: "Which hand does Adin Hill catch with?", correct: "Left", wrong: "Right", cat: "goalies"},
+            {q: "Which hand does Akira Schmid catch with?", correct: "Left", wrong: "Right", cat: "goalies"},
+            {q: "Which goalie wears the lower number?", correct: "Adin Hill", wrong: "Akira Schmid", cat: "goalies"},
+            {q: "Which goalie wears the higher number?", correct: "Akira Schmid", wrong: "Adin Hill", cat: "goalies"},
+            {q: "What # does Hill wear?", correct: "33", wrong: "40", cat: "goalies"},
+            {q: "What # does Schmid wear?", correct: "40", wrong: "33", cat: "goalies"},
+            {q: "Hill's number?", correct: "33", wrong: "40", cat: "goalies"},
+            {q: "Schmid's number?", correct: "40", wrong: "33", cat: "goalies"},
+            {q: "Hill catches with which hand?", correct: "Left", wrong: "Right", cat: "goalies"},
+            {q: "Schmid catches with which hand?", correct: "Left", wrong: "Right", cat: "goalies"},
+            {q: "What position is Hill?", correct: "G", wrong: "D", cat: "goalies"},
+            {q: "What position is Schmid?", correct: "G", wrong: "F", cat: "goalies"},
+            {q: "Who is #33?", correct: "Adin Hill", wrong: "Akira Schmid", cat: "goalies"},
+            
+            // Defense
+            {q: "What # does Zach Whitecloud wear?", correct: "2", wrong: "3", cat: "defense"},
+            {q: "What # does Brayden McNabb wear?", correct: "3", wrong: "2", cat: "defense"},
+            {q: "What # does Jeremy Lauzon wear?", correct: "5", wrong: "6", cat: "defense"},
+            {q: "What # does Kaedan Korczak wear?", correct: "6", wrong: "5", cat: "defense"},
+            {q: "What # does Noah Hanifin wear?", correct: "15", wrong: "17", cat: "defense"},
+            {q: "What # does Ben Hutton wear?", correct: "17", wrong: "15", cat: "defense"},
+            {q: "What # does Shea Theodore wear?", correct: "27", wrong: "15", cat: "defense"},
+            {q: "Who wears #2?", correct: "Zach Whitecloud", wrong: "Brayden McNabb", cat: "defense"},
+            {q: "Who wears #3?", correct: "Brayden McNabb", wrong: "Jeremy Lauzon", cat: "defense"},
+            {q: "Who wears #5?", correct: "Jeremy Lauzon", wrong: "Kaedan Korczak", cat: "defense"},
+            {q: "Who wears #6?", correct: "Kaedan Korczak", wrong: "Noah Hanifin", cat: "defense"},
+            {q: "Who wears #15?", correct: "Noah Hanifin", wrong: "Ben Hutton", cat: "defense"},
+            {q: "Who wears #17?", correct: "Ben Hutton", wrong: "Shea Theodore", cat: "defense"},
+            {q: "Who wears #27?", correct: "Shea Theodore", wrong: "Noah Hanifin", cat: "defense"},
+            {q: "Which hand does Whitecloud shoot?", correct: "Right", wrong: "Left", cat: "defense"},
+            {q: "Which hand does McNabb shoot?", correct: "Left", wrong: "Right", cat: "defense"},
+            {q: "Which hand does Lauzon shoot?", correct: "Left", wrong: "Right", cat: "defense"},
+            {q: "Which hand does Korczak shoot?", correct: "Right", wrong: "Left", cat: "defense"},
+            {q: "Which hand does Hanifin shoot?", correct: "Left", wrong: "Right", cat: "defense"},
+            {q: "Which hand does Hutton shoot?", correct: "Left", wrong: "Right", cat: "defense"},
+            {q: "Which hand does Theodore shoot?", correct: "Left", wrong: "Right", cat: "defense"},
+            {q: "How many defensemen shoot right?", correct: "2", wrong: "3", cat: "defense"},
+            {q: "How many defensemen shoot left?", correct: "5", wrong: "4", cat: "defense"},
+            {q: "Whitecloud's number?", correct: "2", wrong: "3", cat: "defense"},
+            {q: "McNabb's number?", correct: "3", wrong: "5", cat: "defense"},
+            {q: "Lauzon's number?", correct: "5", wrong: "6", cat: "defense"},
+            {q: "Korczak's number?", correct: "6", wrong: "5", cat: "defense"},
+            {q: "Hanifin's number?", correct: "15", wrong: "17", cat: "defense"},
+            {q: "Hutton's number?", correct: "17", wrong: "15", cat: "defense"},
+            {q: "Theodore's number?", correct: "27", wrong: "15", cat: "defense"},
+            {q: "Who is #2?", correct: "Whitecloud", wrong: "McNabb", cat: "defense"},
+            {q: "Who is #3?", correct: "McNabb", wrong: "Lauzon", cat: "defense"},
+            {q: "Who is #5?", correct: "Lauzon", wrong: "Korczak", cat: "defense"},
+            {q: "Who is #6?", correct: "Korczak", wrong: "Hanifin", cat: "defense"},
+            {q: "Who is #15?", correct: "Hanifin", wrong: "Hutton", cat: "defense"},
+            
+            // Forwards
+            {q: "What # does Tanner Pearson wear?", correct: "70", wrong: "71", cat: "forwards"},
+            {q: "What # does William Karlsson wear?", correct: "71", wrong: "70", cat: "forwards"},
+            {q: "What # does Ivan Barbashev wear?", correct: "49", wrong: "19", cat: "forwards"},
+            {q: "What # does Brett Howden wear?", correct: "21", wrong: "19", cat: "forwards"},
+            {q: "What # does Nicolas Roy wear?", correct: "10", wrong: "19", cat: "forwards"},
+            {q: "What # does Pavel Dorofeyev wear?", correct: "16", wrong: "19", cat: "forwards"},
+            {q: "What # does Alexander Holtz wear?", correct: "19", wrong: "16", cat: "forwards"},
+            {q: "What # does Victor Olofsson wear?", correct: "95", wrong: "19", cat: "forwards"},
+            {q: "What # does Keegan Kolesar wear?", correct: "55", wrong: "19", cat: "forwards"},
+            {q: "What # does Cole Schwindt wear?", correct: "72", wrong: "19", cat: "forwards"},
+            {q: "What # does Tanner Laczynski wear?", correct: "22", wrong: "21", cat: "forwards"},
+            {q: "What # does Jack Eichel wear?", correct: "9", wrong: "10", cat: "forwards"},
+            {q: "What # does Mark Stone wear?", correct: "61", wrong: "71", cat: "forwards"},
+            {q: "Who wears #70?", correct: "Tanner Pearson", wrong: "William Karlsson", cat: "forwards"},
+            {q: "Who wears #71?", correct: "William Karlsson", wrong: "Tanner Pearson", cat: "forwards"},
+            {q: "Who wears #49?", correct: "Ivan Barbashev", wrong: "Brett Howden", cat: "forwards"},
+            {q: "Who wears #21?", correct: "Brett Howden", wrong: "Tanner Laczynski", cat: "forwards"},
+            {q: "Who wears #10?", correct: "Nicolas Roy", wrong: "Jack Eichel", cat: "forwards"},
+            {q: "Who wears #16?", correct: "Pavel Dorofeyev", wrong: "Alexander Holtz", cat: "forwards"},
+            {q: "Who wears #19?", correct: "Alexander Holtz", wrong: "Pavel Dorofeyev", cat: "forwards"},
+            {q: "Who wears #95?", correct: "Victor Olofsson", wrong: "Keegan Kolesar", cat: "forwards"},
+            {q: "Who wears #55?", correct: "Keegan Kolesar", wrong: "Cole Schwindt", cat: "forwards"},
+            {q: "Who wears #72?", correct: "Cole Schwindt", wrong: "Tanner Pearson", cat: "forwards"},
+            {q: "Who wears #22?", correct: "Tanner Laczynski", wrong: "Brett Howden", cat: "forwards"},
+            {q: "Who wears #9?", correct: "Jack Eichel", wrong: "Nicolas Roy", cat: "forwards"},
+            {q: "Who wears #61?", correct: "Mark Stone", wrong: "William Karlsson", cat: "forwards"},
+            {q: "Which hand does Pearson shoot?", correct: "Left", wrong: "Right", cat: "forwards"},
+            {q: "Which hand does Karlsson shoot?", correct: "Left", wrong: "Right", cat: "forwards"},
+            {q: "Which hand does Barbashev shoot?", correct: "Left", wrong: "Right", cat: "forwards"},
+            {q: "Which hand does Howden shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "Which hand does Roy shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "Which hand does Dorofeyev shoot?", correct: "Left", wrong: "Right", cat: "forwards"},
+            {q: "Which hand does Holtz shoot?", correct: "Left", wrong: "Right", cat: "forwards"},
+            {q: "Which hand does Olofsson shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "Which hand does Kolesar shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "Which hand does Schwindt shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "Which hand does Laczynski shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "Which hand does Eichel shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "Which hand does Stone shoot?", correct: "Right", wrong: "Left", cat: "forwards"},
+            {q: "What position is Pearson?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Karlsson?", correct: "F", wrong: "G", cat: "forwards"},
+            {q: "What position is Barbashev?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Howden?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Roy?", correct: "F", wrong: "G", cat: "forwards"},
+            {q: "What position is Dorofeyev?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Holtz?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Olofsson?", correct: "F", wrong: "G", cat: "forwards"},
+            {q: "What position is Kolesar?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Schwindt?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Laczynski?", correct: "F", wrong: "G", cat: "forwards"},
+            {q: "What position is Eichel?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "What position is Stone?", correct: "F", wrong: "D", cat: "forwards"},
+            {q: "How many forwards shoot right?", correct: "6", wrong: "7", cat: "forwards"},
+            {q: "How many forwards shoot left?", correct: "7", wrong: "6", cat: "forwards"},
+            {q: "Pearson's number?", correct: "70", wrong: "71", cat: "forwards"},
+            {q: "Karlsson's number?", correct: "71", wrong: "70", cat: "forwards"},
+            {q: "Barbashev's number?", correct: "49", wrong: "19", cat: "forwards"},
+            {q: "Howden's number?", correct: "21", wrong: "22", cat: "forwards"},
+            {q: "Roy's number?", correct: "10", wrong: "9", cat: "forwards"},
+            {q: "Dorofeyev's number?", correct: "16", wrong: "19", cat: "forwards"}
+        ];
+
+        let shuffledQuestions = [];
+        let userAnswers = {};
+        let questionStats = {};
+        let activeQuestions = [];
+
+        function loadStats() {
+            const saved = localStorage.getItem('rosterQuizStats');
+            if (saved) {
+                questionStats = JSON.parse(saved);
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('rosterQuizStats', JSON.stringify(questionStats));
+        }
+
+        function startQuiz() {
+            const selected = [];
+            if (document.getElementById('catGoalies').checked) selected.push('goalies');
+            if (document.getElementById('catDefense').checked) selected.push('defense');
+            if (document.getElementById('catForwards').checked) selected.push('forwards');
+            
+            if (selected.length === 0) {
+                alert('Please select at least one category');
+                return;
+            }
+            
+            activeQuestions = allQuestions.filter(q => selected.includes(q.cat));
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            generateQuiz();
+        }
+
+        function backToStart() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+            updateStartButton();
+        }
+
+        function updateStartButton() {
+            const btn = document.getElementById('startBtn');
+            const checkboxes = [
+                document.getElementById('catGoalies'),
+                document.getElementById('catDefense'),
+                document.getElementById('catForwards')
+            ];
+            
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    const anyChecked = checkboxes.some(c => c.checked);
+                    btn.disabled = !anyChecked;
+                });
+            });
+        }
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function smartShuffle(array) {
+            const wrong = [];
+            const unanswered = [];
+            const correct = [];
+
+            array.forEach(q => {
+                const stat = questionStats[q.q];
+                if (!stat) {
+                    unanswered.push(q);
+                } else if (stat.lastResult === 'incorrect') {
+                    wrong.push(q);
+                } else if (stat.lastResult === 'correct') {
+                    correct.push(q);
+                }
+            });
+
+            const shuffledWrong = shuffle(wrong);
+            const shuffledUnanswered = shuffle(unanswered);
+            const shuffledCorrect = shuffle(correct);
+
+            return [...shuffledWrong, ...shuffledUnanswered, ...shuffledCorrect];
+        }
+
+        function selectOption(index, isCorrect) {
+            const buttons = document.querySelectorAll(`[data-question="${index}"]`);
+            buttons.forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            userAnswers[index] = isCorrect;
+        }
+
+        function generateQuiz() {
+            shuffledQuestions = smartShuffle(activeQuestions);
+            const questionsDiv = document.getElementById('questions');
+            questionsDiv.innerHTML = '';
+            document.getElementById('score').style.display = 'none';
+            userAnswers = {};
+
+            const wrong = activeQuestions.filter(q => questionStats[q.q]?.lastResult === 'incorrect').length;
+            const correct = activeQuestions.filter(q => questionStats[q.q]?.lastResult === 'correct').length;
+            const unanswered = activeQuestions.length - wrong - correct;
+            
+            let progressMsg = 'Select answers then click Submit';
+            if (wrong > 0 || correct > 0) {
+                progressMsg = `📊 Questions prioritized: ${wrong} wrong (first), ${unanswered} unanswered, ${correct} correct`;
+            }
+            document.getElementById('progress').textContent = progressMsg;
+
+            shuffledQuestions.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question';
+                
+                let statusBadge = '';
+                const stat = questionStats[item.q];
+                if (stat?.lastResult === 'incorrect') {
+                    statusBadge = '<span class="status-badge status-wrong">Previously Wrong</span>';
+                } else if (stat?.lastResult === 'correct') {
+                    statusBadge = '<span class="status-badge status-correct">Previously Correct</span>';
+                }
+
+                const options = Math.random() < 0.5 
+                    ? [{text: item.correct, isCorrect: true}, {text: item.wrong, isCorrect: false}]
+                    : [{text: item.wrong, isCorrect: false}, {text: item.correct, isCorrect: true}];
+                
+                qDiv.innerHTML = `
+                    <div class="question-text">${index + 1}. ${item.q}${statusBadge}</div>
+                    <div class="options">
+                        <button type="button" class="option-btn" data-question="${index}" onclick="selectOption(${index}, ${options[0].isCorrect})">${options[0].text}</button>
+                        <button type="button" class="option-btn" data-question="${index}" onclick="selectOption(${index}, ${options[1].isCorrect})">${options[1].text}</button>
+                    </div>
+                    <div class="feedback" id="f${index}"></div>
+                `;
+                questionsDiv.appendChild(qDiv);
+            });
+        }
+
+        function shuffleQuiz() {
+            generateQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetStats() {
+            if (confirm('Reset all question statistics? This will clear your progress.')) {
+                questionStats = {};
+                localStorage.removeItem('rosterQuizStats');
+                generateQuiz();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function exportStats() {
+            const statsText = JSON.stringify(questionStats, null, 2);
+            const blob = new Blob([statsText], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'roster-quiz-stats.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function viewStats() {
+            const totalQuestions = allQuestions.length;
+            const answeredQuestions = Object.keys(questionStats).length;
+            const unanswered = totalQuestions - answeredQuestions;
+            
+            let correct = 0;
+            let incorrect = 0;
+            let totalCorrect = 0;
+            let totalIncorrect = 0;
+            
+            Object.values(questionStats).forEach(stat => {
+                if (stat.lastResult === 'correct') correct++;
+                if (stat.lastResult === 'incorrect') incorrect++;
+                totalCorrect += stat.correct || 0;
+                totalIncorrect += stat.incorrect || 0;
+            });
+            
+            const totalAttempts = totalCorrect + totalIncorrect;
+            const accuracy = totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
+            
+            const statsMessage = `
+📊 ROSTER QUIZ STATISTICS
+
+Overall Performance:
+• Total Questions: ${totalQuestions}
+• Questions Attempted: ${answeredQuestions}
+• Not Yet Attempted: ${unanswered}
+
+Current Status:
+• Last Answered Correctly: ${correct}
+• Last Answered Incorrectly: ${incorrect}
+• Unanswered: ${unanswered}
+
+All-Time Accuracy:
+• Total Attempts: ${totalAttempts}
+• Correct Answers: ${totalCorrect}
+• Incorrect Answers: ${totalIncorrect}
+• Accuracy Rate: ${accuracy}%
+
+Questions you got wrong will appear first when you shuffle the quiz!
+            `.trim();
+            
+            alert(statsMessage);
+        }
+
+        loadStats();
+        updateStartButton();
+
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let correct = 0;
+            let total = shuffledQuestions.length;
+
+            shuffledQuestions.forEach((item, index) => {
+                const buttons = document.querySelectorAll(`[data-question="${index}"]`);
+                const feedback = document.getElementById(`f${index}`);
+                const userAnswer = userAnswers[index];
+
+                if (!questionStats[item.q]) {
+                    questionStats[item.q] = { correct: 0, incorrect: 0 };
+                }
+
+                if (userAnswer === true) {
+                    correct++;
+                    questionStats[item.q].correct++;
+                    questionStats[item.q].lastResult = 'correct';
+                    feedback.className = 'feedback correct';
+                    feedback.textContent = '✓ Correct!';
+                    feedback.style.display = 'block';
+                    
+                    buttons.forEach(btn => {
+                        if (btn.textContent === item.correct) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                } else if (userAnswer === false) {
+                    questionStats[item.q].incorrect++;
+                    questionStats[item.q].lastResult = 'incorrect';
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = `✗ Correct answer: ${item.correct}`;
+                    feedback.style.display = 'block';
+                    
+                    buttons.forEach(btn => {
+                        if (btn.textContent === item.correct) {
+                            btn.classList.add('correct');
+                        } else {
+                            btn.classList.add('incorrect');
+                        }
+                    });
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = `⚠ Not answered. Correct: ${item.correct}`;
+                    feedback.style.display = 'block';
+                    
+                    buttons.forEach(btn => {
+                        if (btn.textContent === item.correct) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                }
+            });
+
+            const scoreDiv = document.getElementById('score');
+            const percentage = Math.round((correct / total) * 100);
+            scoreDiv.textContent = `Score: ${correct}/${total} (${percentage}%)`;
+            scoreDiv.style.display = 'block';
+
+            saveStats();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
