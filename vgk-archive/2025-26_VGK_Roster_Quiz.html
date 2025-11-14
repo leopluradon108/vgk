@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025-26 VGK Roster Quiz - Easy Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ VEGAS GOLDEN KNIGHTS ⚔️<br>2025-26 ROSTER QUIZ</h1>
+        
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <h2 style="margin-bottom: 10px;">EASY MODE - Multiple Choice</h2>
+
+            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em;">Color Palette:</h3>
+            <div class="palette-selection">
+                <div class="palette-option" onclick="selectPalette('classic')">
+                    <input type="radio" id="palette-classic" name="palette" value="classic" checked>
+                    <label for="palette-classic">
+                        Classic
+                        <div class="palette-preview classic-preview"></div>
+                    </label>
+                </div>
+                <div class="palette-option" onclick="selectPalette('bold')">
+                    <input type="radio" id="palette-bold" name="palette" value="bold">
+                    <label for="palette-bold">
+                        Bold
+                        <div class="palette-preview bold-preview"></div>
+                    </label>
+                </div>
+            </div>
+
+            <h3 style="margin: 20px 0 10px 0; font-size: 1.1em;">By Question Type:</h3>
+            <div class="category-selection">
+                <div class="category-option">
+                    <input type="checkbox" id="cat-numbers" checked onchange="updateStartButton()">
+                    <label for="cat-numbers" onclick="toggleCategory('numbers')">
+                        Player Numbers
+                        <div class="category-count">Questions about jersey numbers</div>
+                    </label>
+                </div>
+
+                <div class="category-option">
+                    <input type="checkbox" id="cat-handedness" checked onchange="updateStartButton()">
+                    <label for="cat-handedness" onclick="toggleCategory('handedness')">
+                        Handedness
+                        <div class="category-count">Questions about shooting/catching side</div>
+                    </label>
+                </div>
+
+                <div class="category-option">
+                    <input type="checkbox" id="cat-position" checked onchange="updateStartButton()">
+                    <label for="cat-position" onclick="toggleCategory('position')">
+                        Position
+                        <div class="category-count">Questions about player positions</div>
+                    </label>
+                </div>
+            </div>
+
+            <h3 style="color: #FFD700; margin: 20px 0 10px 0; font-size: 1.1em;">By Player Position:</h3>
+            <div class="category-selection">
+                <div class="category-option">
+                    <input type="checkbox" id="cat-goalies" checked onchange="updateStartButton()">
+                    <label for="cat-goalies" onclick="toggleCategory('goalies')">
+                        Goalies
+                        <div class="category-count">Questions about goaltenders</div>
+                    </label>
+                </div>
+
+                <div class="category-option">
+                    <input type="checkbox" id="cat-defense" checked onchange="updateStartButton()">
+                    <label for="cat-defense" onclick="toggleCategory('defense')">
+                        Defense
+                        <div class="category-count">Questions about defensemen</div>
+                    </label>
+                </div>
+
+                <div class="category-option">
+                    <input type="checkbox" id="cat-forwards" checked onchange="updateStartButton()">
+                    <label for="cat-forwards" onclick="toggleCategory('forwards')">
+                        Forwards
+                        <div class="category-count">Questions about forwards</div>
+                    </label>
+                </div>
+            </div>
+
+            <button class="start-quiz-btn" id="startBtn" onclick="startQuiz()">Start Quiz</button>
+            <button class="reset-btn" onclick="viewStats()">📊 View My Stats</button>
+            <button class="reset-btn" onclick="exportStats()">💾 Export Stats</button>
+        </div>
+        
+        <!-- Quiz Screen -->
+        <div class="quiz-screen" id="quizScreen">
+            <button class="back-btn" onclick="backToStart()">← Back to Categories</button>
+            <button class="shuffle-btn" onclick="shuffleQuiz()">🔀 Shuffle Quiz</button>
+            <button class="reset-btn" onclick="resetStats()">↺ Reset All Stats</button>
+            <div class="progress" id="progress">Select answers then click Submit</div>
+            <div class="score" id="score"></div>
+            <form id="quizForm">
+                <div id="questions"></div>
+                <button type="submit" class="submit-btn">Submit Answers</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
