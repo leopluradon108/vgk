@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VGK Roster Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landingPage" class="page active">
+        <div class="container">
+            <h1 class="title">Vegas Golden Knights</h1>
+            <h2 class="subtitle" id="seasonTitle">2024-25 Season</h2>
+            
+            <div class="button-group">
+                <button class="main-button" onclick="showGameTime()">Game Time</button>
+                <button class="main-button" onclick="showScrimmage()">Scrimmage</button>
+            </div>
+            
+            <div class="color-scheme-buttons">
+                <button class="scheme-button" onclick="setColorScheme('classic')">Classic</button>
+                <button class="scheme-button" onclick="setColorScheme('bold')">Bold</button>
+            </div>
+            
+            <button class="stats-button" onclick="showStats()">View Stats</button>
+        </div>
+    </div>
+
+    <!-- Game Time (Quiz Builder) -->
+    <div id="gameTimePage" class="page">
+        <div class="container">
+            <button class="back-button" onclick="showLanding()">← Back</button>
+            <h1 class="title">Game Time Quiz</h1>
+            
+            <div class="quiz-builder">
+                <h3>Question Types:</h3>
+                <label><input type="checkbox" id="qtNumbers" checked> Player Numbers</label>
+                <label><input type="checkbox" id="qtHandedness" checked> Handedness</label>
+                <label><input type="checkbox" id="qtPosition" checked> Position</label>
+                
+                <h3>Position Filters:</h3>
+                <label><input type="checkbox" id="pfForwards" checked> Forwards</label>
+                <label><input type="checkbox" id="pfDefense" checked> Defense</label>
+                <label><input type="checkbox" id="pfGoalies" checked> Goalies</label>
+                
+                <h3>Difficulty:</h3>
+                <label><input type="radio" name="difficulty" value="easy" checked> Easy (Multiple Choice)</label>
+                <label><input type="radio" name="difficulty" value="hard"> Hard (Type Answer)</label>
+                
+                <button class="main-button" onclick="startQuiz()">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Page -->
+    <div id="quizPage" class="page">
+        <div class="container">
+            <button class="back-button" onclick="endQuiz()">← End Quiz</button>
+            <div id="quizContent"></div>
+        </div>
+    </div>
+
+    <!-- Scrimmage (Study Mode) -->
+    <div id="scrimmagePage" class="page">
+        <div class="container">
+            <button class="back-button" onclick="showLanding()">← Back</button>
+            <h1 class="title">Study Guide</h1>
+            
+            <div class="filter-buttons">
+                <button onclick="filterPlayers('all')" class="active">All</button>
+                <button onclick="filterPlayers('F')">Forwards</button>
+                <button onclick="filterPlayers('D')">Defense</button>
+                <button onclick="filterPlayers('G')">Goalies</button>
+            </div>
+            
+            <div id="playerCards" class="player-grid"></div>
+        </div>
+    </div>
+
+    <!-- Stats Page -->
+    <div id="statsPage" class="page">
+        <div class="container">
+            <button class="back-button" onclick="showLanding()">← Back</button>
+            <h1 class="title">Your Stats</h1>
+            <div id="statsContent"></div>
+            <button class="main-button" onclick="clearStats()">Clear Stats</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
